@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static widget_tweaks %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+    <section class="container mt-5">
+        <h2>Add Contact</h2>
+        <hr>
+        <div>
+            <form action="" method="post">{% csrf_token %}
+                <dic class="row">
+                    <div class="col-12 col-lg-6">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        
+                        <input type="submit" value="Add Contact"/>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <table class="table">
+                            {{ contact_numbers.management_form }}
+        
+                            {% for form in contact_numbers.forms %}
+        
+                                {% if forloop.first %}
+
+                                    <h5>Numbers</h5>
+                                {% endif %}
+        
+                                <tr class="formset_row">
+                                    {% for field in form.visible_fields %}
+                                    {% if forloop.first %}
+                                        <td>
+                                            {# Include the hidden fields in the form #}
+                                            {% if forloop.first %}
+                                                {% for hidden in form.hidden_fields %}
+                                                    {{ hidden }}
+                                                    
+                                                {% endfor %}
+                                            {% endif %}
+                                            {{ field.errors.as_ul }}
+                                            {{ field }}
+                                            
+                                        </td>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+        
+                            {% endfor %}
+                        </table>
+
+                    </div>
+
+
+                </div>
+                
+                
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

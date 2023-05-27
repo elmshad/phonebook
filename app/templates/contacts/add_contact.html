@@ -1,0 +1,49 @@
+<!-- add_contact.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Add Contact</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ contact_form.as_p }}
+    
+    <h3>Numbers</h3>
+    <div id="number-formset">
+      {{ number_formset.management_form }}
+      {% for form in number_formset %}
+        <div class="number-form">
+          {{ form.as_table }}
+          {% if forloop.last %}
+            <button type="button" class="add-number-btn">Add Number</button>
+          {% else %}
+            <button type="button" class="remove-number-btn">Remove Number</button>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    
+    <input type="submit" value="Save">
+  </form>
+
+  <script>
+    // JavaScript code for adding and removing number fields
+    $(document).ready(function() {
+      var addButton = $(".add-number-btn");
+      var numberFormset = $("#number-formset");
+
+      addButton.on("click", function() {
+        var totalForms = parseInt($('#id_number-TOTAL_FORMS').val());
+        var formIndex = totalForms - 1;
+        var emptyForm = "{{ number_formset.empty_form.as_table }}";
+        var newForm = emptyForm.replace(/__prefix__/g, formIndex);
+        numberFormset.append(newForm);
+        $('#id_number-TOTAL_FORMS').val(totalForms + 1);
+      });
+
+      numberFormset.on("click", ".remove-number-btn", function() {
+        $(this).closest(".number-form").remove();
+      });
+    });
+  </script>
+{% endblock %}

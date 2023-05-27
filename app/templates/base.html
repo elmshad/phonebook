@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block meta %}{% endblock %}
+    {% include 'includes/css.html'%}
+    {% block css %}{% endblock %}    
+</head>
+
+<body>
+    {% comment %} Header {% endcomment %}
+    {% include 'parts/header.html'%}
+
+    {% comment %} Main Content {% endcomment %}
+
+    {% block content %}{% endblock %}
+
+    {% comment %} Footer {% endcomment %}
+
+    {% include 'parts/footer.html'%}
+
+    {% comment %} Main Javascript {% endcomment %}
+    {% include 'includes/js.html'%}
+
+    {% comment %} Block for extra Javascript {% endcomment %}
+    {% block js %}{% endblock %}
+</body>
+</html>

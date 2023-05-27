@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB} 
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  web:
+    build: ./
+    command: >
+      bash -c "python wait_for_postgres.py &&
+                chmod +x ./manage.py &&
+               ./manage.py makemigrations &&
+               ./manage.py migrate &&
+               gunicorn core.wsgi:application --bind 0.0.0.0:8001"
+    volumes:
+      - ./app:/app
+
+    env_file:
+      - ./.env      
+    expose:
+      - 8001
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
