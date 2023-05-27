@@ -1,14 +1,6 @@
 # phonebook_task
 
-- Database simple schema diagram
-
-+-------------------+           +-------------------+
-|      Contact      |           |       Number      |
-+-------------------+           +-------------------+
-| - id: PK          | 1       * | - id: PK          |
-| - name: CharField | --------- | - contact: FK     |
-+-------------------+           | - number: CharField|
-                                +-------------------+
+- Database simple schema diagram attached as image named 'db_diagram.jpeg'
 
 
 - How to run app
