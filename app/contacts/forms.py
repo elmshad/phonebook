@@ -1,23 +1,17 @@
 from django import forms
-from .models import Contact, Number
-
+from .models import *
 
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['name']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
+        fields = "__all__"
 
 class NumberForm(forms.ModelForm):
     class Meta:
         model = Number
-        fields = ['number']
-        widgets = {
-            'number': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = "__all__"
 
 
-NumberFormSet = forms.modelformset_factory(Number, form=NumberForm, extra=1)
+
+NumberFormSet = forms.inlineformset_factory(
+    Contact, Number, form=NumberForm, extra=10)

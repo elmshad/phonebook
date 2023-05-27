@@ -6,6 +6,5 @@ app_name = 'contacts'
 urlpatterns = [
     path('', views.index , name='index'),
     path('<int:pk>/', views.contact_details , name='contact_details'),
-    # path('add/', views.ContactNumberCreate.as_view() , name='add_contact'),
-    path('add-contact/', views.add_contact, name='add_contact'),
+    path('add/', views.ContactNumberCreate.as_view() , name='add_contact'),
 ]
